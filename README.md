@@ -34,12 +34,12 @@ domain domain.tld {
 
 #### Fetch the certificates:
 ```
-doas acme-client -v domain.tld
+acme-client -v domain.tld
 ```
 
 #### Obtain the OCSP stapling file:
 ```
-doas ocspcheck -N -o /etc/ssl/domain.tld.ocsp.pem /etc/ssl/domain.tld_fullchain.pem
+ocspcheck -N -o /etc/ssl/domain.tld.ocsp.pem /etc/ssl/domain.tld_fullchain.pem
 ```
 
 Or using a self-signed cert instead, ie:
@@ -97,14 +97,14 @@ types {
 
 #### Permit DNS and hostfile resolution, within the chroot:
 ```
-doas mkdir -p /var/www/etc
-doas sh -c "grep ^nameserver /etc/resolv.conf > /var/www/etc/resolv.conf"
-doas touch /var/www/etc/hosts # optional
+mkdir -p /var/www/etc
+sh -c "grep ^nameserver /etc/resolv.conf > /var/www/etc/resolv.conf"
+touch /var/www/etc/hosts # optional
 ```
 
 #### Enable services (not starting):
 ```
-doas rcctl enable httpd postgresql phpXX_fpm
+rcctl enable httpd postgresql phpXX_fpm
 ```
 
 #### Initialize postgresql:
@@ -117,8 +117,8 @@ logout
 
 #### Start postgresql and add a user:
 ```
-doas rcctl start postgresql
-doas su - _postgresql
+rcctl start postgresql
+su - _postgresql
 psql -U postgres
         postgres=# CREATE USER "tt-rss" WITH PASSWORD 'YourPasswordHere';
         postgres=# CREATE DATABASE ttrssdb WITH OWNER "tt-rss";
@@ -168,7 +168,7 @@ ln -s /usr/local/bin/php-X.X /usr/local/bin/php
 #### Global Configuration:
 ```
 cd /var/www/htdocs/tt-rss/
-doas cp config.php-dist config.php
+cp config.php-dist config.php
 ```
 
 #### Edit config.php (optional?):
@@ -180,7 +180,7 @@ putenv('TTRSS_DB_PASS=YourPasswordHere');
 putenv('TTRSS_SELF_URL_PATH=https://domain.tld/tt-rss');
 ```
 
-#### Manually update schema:
+#### Manually update schema (optional):
 ```
 doas -u www php /var/www/htdocs/tt-rss/update.php --update-schema
 ```
@@ -203,6 +203,6 @@ Notes / Resources:
 ```
 https://tt-rss.org/wiki/InstallationNotesHost
 https://github.com/levito/tt-rss-feedly-theme
-```
 
-#### Updated steps to follow, soon'ish..
+* tt-rss version is not displaying. Reason / solution to be determined.
+```
