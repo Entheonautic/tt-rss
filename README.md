@@ -185,6 +185,10 @@ putenv('TTRSS_SELF_URL_PATH=https://domain.tld/tt-rss');
 doas -u www php /var/www/htdocs/tt-rss/update.php --update-schema
 ```
 
+* Connect to your server: https://domain.tld/tt-rss/
+* Default user/pass: admin/password
+* Change admin password!
+
 #### Download themes:
 ```
 ftp https://github.com/levito/tt-rss-feedly-theme/archive/master.zip
@@ -194,10 +198,6 @@ cp -r feedly* [TT-RSS_Home]/themes.local
 
 * In TT-RSS preferences, select the feedly-theme.
 ```
-
-* Connect to your server: https://domain.tld/tt-rss/
-* Default user/pass: admin/password
-* Change admin password!
 
 #### Notes / Resources:
 ```
