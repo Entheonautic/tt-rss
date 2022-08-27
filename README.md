@@ -1,4 +1,5 @@
 # Configuring TT-RSS on OpenBSD
+
 #### Install required packages:
 ```
 pkg_add php php-pdo_pgsql php-pgsql php-curl php-intl postgresql-server git gnupg unzip
@@ -32,6 +33,22 @@ domain domain.tld {
 }
 ```
 
+#### Edit: /etc/httpd.conf (verify config with httpd -nv):
+```
+server "domain.tld" {
+        listen on * port 80
+        location "/.well-known/acme-challenge/*" {
+                root { "/acme" }
+                request strip 2
+        }
+}
+```
+
+#### Start httpd:
+```
+rcctl start httpd
+```
+
 #### Fetch the certificates:
 ```
 acme-client -v domain.tld
@@ -40,13 +57,6 @@ acme-client -v domain.tld
 #### Obtain the OCSP stapling file:
 ```
 ocspcheck -N -o /etc/ssl/domain.tld.ocsp.pem /etc/ssl/domain.tld_fullchain.pem
-```
-
-Or using a self-signed cert instead, ie:
-#### Using a self-signed cert (10 years):
-```
-openssl genrsa -out /etc/ssl/private/server.key
-openssl req -new -x509 -key /etc/ssl/private/server.key -out /etc/ssl/server.crt -days 3365
 ```
 
 #### Edit crontab to renew certs and obtain stapling file:
@@ -60,7 +70,6 @@ doas crontab -e
 ```
 ext_addr="*"
 domain="domain.tld"
-prefork 3
 
 server $domain {
         listen on $ext_addr port 80
