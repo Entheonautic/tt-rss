@@ -35,12 +35,15 @@ domain domain.tld {
 
 #### Edit: /etc/httpd.conf (verify config with httpd -nv):
 ```
-server "domain.tld" {
-        listen on * port 80
-        location "/.well-known/acme-challenge/*" {
-                root { "/acme" }
-                request strip 2
-        }
+ext_addr="*"
+domain="domain.tld"
+
+server $domain {
+        listen on * port 80
+        location "/.well-known/acme-challenge/*" {
+        root { "/acme" }
+        request strip 2
+        }
 }
 ```
 
@@ -66,16 +69,8 @@ doas crontab -e
 0 * * * * ocspcheck -N -o /etc/ssl/domain.tld.ocsp.pem /etc/ssl/domain.tld_fullchain.pem && rcctl reload httpd
 ```
 
-#### Create or edit /etc/httpd.conf, ie:
+#### Append to /etc/httpd.conf:
 ```
-ext_addr="*"
-domain="domain.tld"
-
-server $domain {
-        listen on $ext_addr port 80
-        block return 301 "https://$SERVER_NAME$REQUEST_URI"
-}
-
 server $domain {
         listen on $ext_addr tls port 443
 
@@ -124,7 +119,7 @@ initdb -D /var/postgresql/data -U postgres -A scram-sha-256 -E UTF8 -W
 logout
 ```
 
-#### Start postgresql and add a user:
+#### Start postgresql, create database and user:
 ```
 rcctl start postgresql
 su - _postgresql
