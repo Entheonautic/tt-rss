@@ -13,7 +13,8 @@ extension=curl.so
 zend_extension=opcache.so
 ```
 
-#### Using Let's Encrypt for SSL certification edit /etc/acme-client.conf:
+#### Using Let's Encrypt for SSL certification 
+#### edit /etc/acme-client.conf:
 ```
 authority letsencrypt {
         api url "https://acme-v02.api.letsencrypt.org/directory"
@@ -42,7 +43,6 @@ doas ocspcheck -N -o /etc/ssl/domain.tld.ocsp.pem /etc/ssl/domain.tld_fullchain.
 ```
 
 Or using a self-signed cert instead, ie:
-
 #### Using a self-signed cert (10 years):
 ```
 openssl genrsa -out /etc/ssl/private/server.key
