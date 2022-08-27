@@ -199,7 +199,7 @@ cp -r feedly* [TT-RSS_Home]/themes.local
 * Default user/pass: admin/password
 * Change admin password!
 
-Notes / Resources:
+#### Notes / Resources:
 ```
 https://tt-rss.org/wiki/InstallationNotesHost
 https://github.com/levito/tt-rss-feedly-theme
