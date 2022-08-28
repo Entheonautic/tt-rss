@@ -5,15 +5,6 @@
 pkg_add php php-pdo_pgsql php-pgsql php-curl php-intl postgresql-server git gnupg unzip
 ```
 
-#### Edit /etc/php-XX.ini and enable these:
-```
-extension=pdo_pgsql.so
-extension=pgsql.so
-extension=intl.so
-extension=curl.so
-zend_extension=opcache.so
-```
-
 #### Using Let's Encrypt for SSL certification 
 #### edit /etc/acme-client.conf:
 ```
